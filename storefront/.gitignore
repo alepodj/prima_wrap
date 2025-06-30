@@ -1,0 +1,129 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# IDEs
+.idea
+.vscode
+
+# dependencies
+node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.test
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+# yarn
+.yarn
+.yarn-integrity
+
+# swc
+.swc
+
+# redis dump
+dump.rdb
+
+# os generated files
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# logs
+logs
+*.log
+
+# runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# optional npm cache directory
+.npm
+
+# optional eslint cache
+.eslintcache
+
+# microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# optional repl history
+.node_repl_history
+
+# output of 'npm pack'
+*.tgz
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# nuxt.js build / generate output
+.nuxt
+dist
+
+# gatsby files
+.cache/
+public
+
+# storybook build outputs
+.out
+.storybook-out
+
+# temporary folders
+tmp/
+temp/
+
+# editor directories and files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
