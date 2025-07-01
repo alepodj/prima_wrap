@@ -1,10 +1,10 @@
-import { model } from "@medusajs/framework/utils";
-import { Employee } from "./employee";
+import { model } from '@medusajs/framework/utils'
+import { Employee } from './employee'
 
-export const Company = model.define("company", {
+export const Company = model.define('company', {
   id: model
     .id({
-      prefix: "comp",
+      prefix: 'comp',
     })
     .primaryKey(),
   name: model.text(),
@@ -18,7 +18,7 @@ export const Company = model.define("company", {
   logo_url: model.text().nullable(),
   currency_code: model.text().nullable(),
   spending_limit_reset_frequency: model
-    .enum(["never", "daily", "weekly", "monthly", "yearly"])
-    .default("monthly"),
+    .enum(['never', 'daily', 'weekly', 'monthly', 'yearly'])
+    .default('monthly'),
   employees: model.hasMany(() => Employee),
-});
+})

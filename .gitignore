@@ -166,3 +166,6 @@ Thumbs.db
 # Medusa specific
 .medusa/
 medusa-db.sql
+
+# Volatile assets and temporary files
+assets/
