@@ -1,42 +1,50 @@
-import { HttpTypes } from "@medusajs/framework/types";
-import { Link, LockClosedSolid, PencilSquare, Trash } from "@medusajs/icons";
-import { toast } from "@medusajs/ui";
-import { QueryCompany } from "../../../../types";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ActionMenu } from "../../../components/common";
-import { DeletePrompt } from "../../../components/common/delete-prompt";
-import { useDeleteCompany } from "../../../hooks/api";
+import { HttpTypes } from '@medusajs/framework/types'
+import {
+  Link,
+  LockClosedSolid,
+  PencilSquare,
+  Trash,
+  Users,
+} from '@medusajs/icons'
+import { toast } from '@medusajs/ui'
+import { QueryCompany } from '../../../../types'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { ActionMenu } from '../../../components/common'
+import { DeletePrompt } from '../../../components/common/delete-prompt'
+import { useDeleteCompany } from '../../../hooks/api'
 import {
   CompanyApprovalSettingsDrawer,
   CompanyCustomerGroupDrawer,
   CompanyUpdateDrawer,
-} from "./";
+  CompanyInviteEmployeeDrawer,
+} from './'
 
 export const CompanyActionsMenu = ({
   company,
   customerGroups,
 }: {
-  company: QueryCompany;
-  customerGroups?: HttpTypes.AdminCustomerGroup[];
+  company: QueryCompany
+  customerGroups?: HttpTypes.AdminCustomerGroup[]
 }) => {
-  const [editOpen, setEditOpen] = useState(false);
-  const [customerGroupOpen, setCustomerGroupOpen] = useState(false);
-  const [approvalSettingsOpen, setApprovalSettingsOpen] = useState(false);
-  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false)
+  const [customerGroupOpen, setCustomerGroupOpen] = useState(false)
+  const [approvalSettingsOpen, setApprovalSettingsOpen] = useState(false)
+  const [inviteEmployeeOpen, setInviteEmployeeOpen] = useState(false)
+  const [deleteOpen, setDeleteOpen] = useState(false)
   const { mutateAsync: mutateDelete, isPending: loadingDelete } =
-    useDeleteCompany(company.id);
+    useDeleteCompany(company.id)
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleDelete = () => {
     mutateDelete(company.id, {
       onSuccess: () => {
-        navigate("/companies");
-        toast.success(`Company ${company.name} deleted successfully`);
+        navigate('/companies')
+        toast.success(`Company ${company.name} deleted successfully`)
       },
-    });
-  };
+    })
+  }
 
   return (
     <>
@@ -46,17 +54,22 @@ export const CompanyActionsMenu = ({
             actions: [
               {
                 icon: <PencilSquare />,
-                label: "Edit details",
+                label: 'Edit details',
                 onClick: () => setEditOpen(true),
               },
               {
+                icon: <Users />,
+                label: 'Invite employees',
+                onClick: () => setInviteEmployeeOpen(true),
+              },
+              {
                 icon: <Link />,
-                label: "Manage customer group",
+                label: 'Manage customer group',
                 onClick: () => setCustomerGroupOpen(true),
               },
               {
                 icon: <LockClosedSolid />,
-                label: "Approval settings",
+                label: 'Approval settings',
                 onClick: () => setApprovalSettingsOpen(true),
               },
             ],
@@ -65,7 +78,7 @@ export const CompanyActionsMenu = ({
             actions: [
               {
                 icon: <Trash />,
-                label: "Delete",
+                label: 'Delete',
                 onClick: () => setDeleteOpen(true),
               },
             ],
@@ -77,6 +90,11 @@ export const CompanyActionsMenu = ({
         company={company}
         open={editOpen}
         setOpen={setEditOpen}
+      />
+      <CompanyInviteEmployeeDrawer
+        company={company}
+        open={inviteEmployeeOpen}
+        setOpen={setInviteEmployeeOpen}
       />
       <CompanyCustomerGroupDrawer
         company={company}
@@ -96,5 +114,5 @@ export const CompanyActionsMenu = ({
         setOpen={setDeleteOpen}
       />
     </>
-  );
-};
+  )
+}
