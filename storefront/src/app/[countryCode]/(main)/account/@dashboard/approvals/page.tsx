@@ -1,9 +1,11 @@
 import ApprovedApprovalRequestsAdminList from "@/modules/account/components/approval-requests-admin-list/approved-list"
 import PendingApprovalRequestsAdminList from "@/modules/account/components/approval-requests-admin-list/pending-list"
 import RejectedApprovalRequestsAdminList from "@/modules/account/components/approval-requests-admin-list/rejected-list"
+import { retrieveCustomer } from "@/lib/data/customer"
 import { Heading } from "@medusajs/ui"
 import { Metadata } from "next"
 import { Suspense } from "react"
+import { notFound } from "next/navigation"
 
 export const metadata: Metadata = {
   title: "Approvals",
@@ -15,6 +17,13 @@ export default async function Approvals({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
+  const customer = await retrieveCustomer()
+  
+  // Only allow admins to access the approvals page
+  if (!customer?.employee?.is_admin) {
+    notFound()
+  }
+
   const urlSearchParams = await searchParams
 
   return (

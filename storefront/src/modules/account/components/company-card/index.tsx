@@ -10,6 +10,7 @@ import {
   StoreCompanyResponse,
   StoreUpdateCompany,
 } from "@/types"
+import { B2BCustomer } from "@/types/global"
 import { AdminRegionCountry, HttpTypes } from "@medusajs/types"
 import { Container, Text, clx, toast } from "@medusajs/ui"
 import { useState } from "react"
@@ -17,10 +18,15 @@ import { useState } from "react"
 const CompanyCard = ({
   company,
   regions,
-}: StoreCompanyResponse & { regions: HttpTypes.StoreRegion[] }) => {
+  customer,
+}: StoreCompanyResponse & {
+  regions: HttpTypes.StoreRegion[]
+  customer: B2BCustomer | null
+}) => {
   const [isEditing, setIsEditing] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
 
+  const isAdmin = customer?.employee?.is_admin
   const { updated_at, created_at, employees, ...companyUpdateData } = company
 
   const [companyData, setCompanyData] = useState(
@@ -268,7 +274,11 @@ const CompanyCard = ({
               </Button>
             </>
           ) : (
-            <Button variant="secondary" onClick={() => setIsEditing(true)}>
+            <Button
+              variant="secondary"
+              onClick={() => setIsEditing(true)}
+              disabled={!isAdmin}
+            >
               Edit
             </Button>
           )}

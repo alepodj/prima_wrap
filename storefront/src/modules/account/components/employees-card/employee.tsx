@@ -83,6 +83,9 @@ const Employee = ({
   })
 
   const isCurrentUser = employee.customer.id === customer?.id
+  const isCurrentUserAdmin = customer?.employee?.is_admin
+  const canDeleteEmployee =
+    isCurrentUserAdmin && !isCurrentUser && !employee.is_admin
 
   const handleSubmit = async () => {
     const updateData = {
@@ -156,10 +159,13 @@ const Employee = ({
             </>
           ) : (
             <>
-              {!isCurrentUser && <RemoveEmployeePrompt employee={employee} />}
+              {canDeleteEmployee && (
+                <RemoveEmployeePrompt employee={employee} />
+              )}
               <Button
                 variant="secondary"
                 onClick={() => setIsEditing((prev) => !prev)}
+                disabled={!isCurrentUserAdmin}
               >
                 Edit
               </Button>

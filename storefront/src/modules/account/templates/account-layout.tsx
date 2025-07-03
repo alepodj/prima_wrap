@@ -13,12 +13,21 @@ const AccountLayout: React.FC<AccountLayoutProps> = async ({
   customer,
   children,
 }) => {
-  const { carts_with_approvals } = await listApprovals({
-    type: ApprovalType.ADMIN,
-    status: ApprovalStatusType.PENDING,
-  })
-
-  const numPendingApprovals = carts_with_approvals?.length || 0
+  // Only fetch approvals if the user is an admin
+  let numPendingApprovals = 0
+  if (customer?.employee?.is_admin) {
+    try {
+      const { carts_with_approvals } = await listApprovals({
+        type: ApprovalType.ADMIN,
+        status: ApprovalStatusType.PENDING,
+      })
+      numPendingApprovals = carts_with_approvals?.length || 0
+    } catch (error) {
+      // If there's an error fetching approvals (e.g., 403), just continue with 0
+      console.warn("Could not fetch approvals:", error)
+      numPendingApprovals = 0
+    }
+  }
 
   return (
     <div

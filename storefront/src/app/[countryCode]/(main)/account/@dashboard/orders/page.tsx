@@ -24,9 +24,20 @@ export default async function Orders() {
     approval_settings?.requires_admin_approval ||
     approval_settings?.requires_sales_manager_approval
 
-  const { carts_with_approvals } = await listApprovals({
+  // Only fetch approvals if the user is an admin
+  let carts_with_approvals = []
+  if (customer?.employee?.is_admin) {
+    try {
+      const result = await listApprovals({
     status: ApprovalStatusType.PENDING,
   })
+      carts_with_approvals = result.carts_with_approvals || []
+    } catch (error) {
+      // If there's an error fetching approvals (e.g., 403), just continue with empty array
+      console.warn('Could not fetch approvals:', error)
+      carts_with_approvals = []
+    }
+  }
 
   return (
     <div
